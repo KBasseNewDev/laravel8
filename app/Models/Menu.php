@@ -9,6 +9,7 @@ class Menu extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $primaryKey = 'idMenu';
 
     public function groupes(){
         return $this->belongsToMany(Groupe::class);

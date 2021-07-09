@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Employe;
 
 class EmployeController extends Controller
 {
@@ -15,7 +16,6 @@ class EmployeController extends Controller
     {
         $employes = Employe::all();
 
-        //dd('index');
         return view('employes.index', compact('employes'));
     }
 
@@ -38,34 +38,34 @@ class EmployeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nomEmploye' => 'required|nomEmploye',
-            'prenomEmploye' => 'required|min:3',
-            'dateNaissanve' => 'required|date',
-            'telephoneEmploye' => 'required|integer|min:8',
-            'matriculeEmploye' => 'required|min:6',
-            'professionEmploye' => 'required|min:4',
-            'villeEmploye' => 'required|min:4',
-            'numerocnpsEmploye' => 'required|min:3',
-            'situationMatrimonialeEmploye' => 'required|min:10',
-            'emailEmploye' => 'required|email'
+            'nomEmploye' => 'required',
+            'prenomEmploye' => 'required',
+            'dateNaissance' => 'required|date',
+            'telephoneEmploye' => 'required|unique:employes',
+            'matriculeEmploye' => 'required|unique:employes',
+            'professionEmploye' => 'required',
+            'villeEmploye' => 'required',
+            'dateEmbauche' => 'required',
+            'situationMatrimonialeEmploye' => 'required',
+            'emailEmploye' => 'required|unique:employes'
         ]);
+        
 
         Employe::create([
             'nomEmploye' => $request->nomEmploye,
             'prenomEmploye' => $request->prenomEmploye,
-            'dateNaissanve' => $request->dateNaissance,
+            'dateNaissance' => $request->dateNaissance,
             'telephoneEmploye' => $request->telephoneEmploye,
             'matriculeEmploye' => $request->matriculeEmploye,
             'professionEmploye' => $request->professionEmploye,
             'villeEmploye' => $request->villeEmploye,
-            'numerocnpsEmploye' => $request->numerocnpsEmploye,
+            'dateEmbauche' => $request->dateEmbauche,
             'situationMatrimonialeEmploye' => $request->situationMatrimonialeEmploye,
             'emailEmploye' => $request->emailEmploye
         ]);
 
-        Employe::create($request->all());
 
-        return redirect()->route(home)
+        return redirect()->back()
             ->with('success', 'Employe created succefully');
     }
 
@@ -77,9 +77,10 @@ class EmployeController extends Controller
      */
     public function show($idEmploye)
     {
-        $employes = Employe::findOrFail($idEmploye);
+        $employe = Employe::findOrFail($idEmploye);
 
         return view('employes.show', compact('employe'));
+        // dd('show');
     }
 
     /**
@@ -90,7 +91,7 @@ class EmployeController extends Controller
      */
     public function edit($idEmploye)
     {
-        $employe = Employe::finOrFail($idEmploye);
+        $employe = Employe::where("idEmploye",$idEmploye)->first();
 
         return view('employes.edit', compact('employe'));
     }
@@ -105,32 +106,34 @@ class EmployeController extends Controller
     public function update(Request $request, $idEmploye)
     {
         $this->validate($request, [
-            'nomEmploye' => 'required|3',
-            'prenomEmploye' => 'required|3',
-            'dateNaissanve' => 'required|date',
-            'telephoneEmploye' => 'required|integer',
-            'matriculeEmploye' => 'required|6',
-            'professionEmploye' => 'required|',
-            'villeEmploye' => 'required|4',
-            'numerocnpsEmploye' => 'required|',
-            'situationMatrimonialeEmploye' => 'required|10',
-            'emailEmploye' => 'required|email'
+            'nomEmploye' => 'required',
+            'prenomEmploye' => 'required',
+            'dateNaissance' => 'required|date',
+            'telephoneEmploye' => 'required',
+            'matriculeEmploye' => 'required',
+            'professionEmploye' => 'required',
+            'villeEmploye' => 'required',
+            'dateEmbauche' => 'required',
+            'situationMatrimonialeEmploye' => 'required',
+            'emailEmploye' => 'required'
         ]);
 
-        $empmoye=Employe::finOrFail($idEmploye);
+        $employes=Employe::findOrFail($idEmploye);
 
-        $employe->update([
+        $employes -> update([
             'nomEmploye' => $request->nomEmploye,
             'prenomEmploye' => $request->prenomEmploye,
-            'dateNaissanve' => $request->dateNaissance,
+            'dateNaissance' => $request->dateNaissance,
             'telephoneEmploye' => $request->telephoneEmploye,
             'matriculeEmploye' => $request->matriculeEmploye,
             'professionEmploye' => $request->professionEmploye,
             'villeEmploye' => $request->villeEmploye,
-            'numerocnpsEmploye' => $request->numerocnpsEmploye,
+            'dateEmbauche' => $request->dateEmbauche,
             'situationMatrimonialeEmploye' => $request->situationMatrimonialeEmploye,
             'emailEmploye' => $request->emailEmploye
         ]);
+        return redirect()->back()
+            ->with('succes', 'Employe modifie succefully');
     }
 
     /**
@@ -143,6 +146,8 @@ class EmployeController extends Controller
     {
         Employe::destroy($idEmploye);
 
-        return redirect()->route('gereremploye');
+        return redirect()->back();
+
+        // dd('destroy');
     }
 }

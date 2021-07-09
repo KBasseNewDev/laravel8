@@ -9,4 +9,5 @@ class Imputation extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $primaryKey = 'idImputation';
 }

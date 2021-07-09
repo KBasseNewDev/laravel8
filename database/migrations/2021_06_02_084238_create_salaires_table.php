@@ -16,12 +16,17 @@ class CreateSalairesTable extends Migration
         Schema::disableForeignKeyConstraints();
         Schema::create('salaires', function (Blueprint $table) {
             $table->bigIncrements('idSalaire');
-            $table->string('etatSalaire');
             $table->string('periodeSalaire');
             $table->unsignedInteger('baseSalaire');
             $table->unsignedInteger('tauxSalaire');
+            $table->unsignedInteger('heureSup');
             $table->unsignedInteger('gainSalaire');
+            $table->unsignedInteger('retenueSalaire');
             $table->unsignedInteger('chargeSalaire');
+            $table->unsignedInteger('salaireBrute');
+            $table->unsignedInteger('netImposable');
+            $table->string('avantageNature');
+            $table->unsignedInteger('netPayer');
             $table->timestamps();
             $table->unsignedBigInteger('idEmploye');
             $table->foreign('idEmploye')

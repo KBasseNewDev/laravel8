@@ -9,6 +9,8 @@ class Groupe extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $fillable = ['nomGroupe', 'montantBruteGroupe'];
+    protected $primaryKey = 'idGroupe';
 
     public function employes(){
         return $this->belongsToMany(Employe::class);

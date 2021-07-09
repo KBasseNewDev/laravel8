@@ -9,6 +9,8 @@ class Retenue extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $fillable = ['nomRetenue', 'montantRetenue'];
+    protected $primaryKey = 'idRetenue';
 
     public function grades(){
         return $this->belongsToMany(Grade::class);

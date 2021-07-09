@@ -9,4 +9,5 @@ class Attribut extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $primaryKey = 'idAttribut';
 }

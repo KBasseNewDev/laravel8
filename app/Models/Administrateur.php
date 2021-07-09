@@ -9,4 +9,5 @@ class Administrateur extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $primaryKey = 'idAdministrateur';
 }

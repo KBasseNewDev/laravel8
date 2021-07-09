@@ -9,6 +9,8 @@ class Prime extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $fillable = ['nomPrime', 'montantPrime'];
+    protected $primaryKey = 'idPrime';
 
     public function grades(){
         return $this->belongsToMany(Grade::class);

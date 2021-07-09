@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Prime;
 
 class PrimeController extends Controller
 {
@@ -13,9 +14,9 @@ class PrimeController extends Controller
      */
     public function index()
     {
-        $prime = Prime::all();
+        $primes = Prime::all();
 
-        return view('primes.index', compact('prime'));
+        return view('primes.index', compact('primes'));
     }
 
     /**
@@ -37,14 +38,16 @@ class PrimeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nomPrime' => 'required|3',
-            'montantPrime' => 'required|3'
+            'nomPrime' => 'required|unique:primes',
+            'montantPrime' => 'required'
         ]);
 
         Prime::create([
             'nomPrime' => $request->nomPrime,
             'montantPrime' => $request->montantPrime
         ]);
+        return redirect()->back()
+            ->with('success', 'Prime created succefully');
     }
 
     /**
@@ -68,7 +71,7 @@ class PrimeController extends Controller
      */
     public function edit($idPrime)
     {
-        $prime = Prime::finOrFail($idPrime);
+        $prime = Prime::findOrFail($idPrime);
 
         return view('primes.edit', compact('prime'));
     }
@@ -87,7 +90,7 @@ class PrimeController extends Controller
             'montantPrime' => 'required|3'
         ]);
 
-        $prime=Prime::finOrFail($idPrime);
+        $prime=Prime::findOrFail($idPrime);
 
         $prime->update([
             'nomPrime' => $request->nomPrime,

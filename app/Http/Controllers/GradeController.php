@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Grade;
 
 class GradeController extends Controller
 {
@@ -13,9 +14,9 @@ class GradeController extends Controller
      */
     public function index()
     {
-        $primes = Prime::all();
+        $grades = Grade::all();
         
-        return view('grades.index', compact('grade'));
+        return view('grades.index', compact('grades'));
     }
 
     /**
@@ -37,14 +38,20 @@ class GradeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nomGrade' => 'required|3',
-            'codeGrade' => 'required|3'
+            'nomGrade' => 'required|unique:grades',
+            'codeGrade' => 'required|unique:grades',
+            'salaireBaseGrade' => 'required'
         ]);
+        
 
         Grade::create([
             'nomGrade' => $request->nomGrade,
-            'codeGrade' => $request->codeGrade
+            'codeGrade' => $request->codeGrade,
+            'salaireBaseGrade' => $request->salaireBaseGrade
         ]);
+
+        return redirect()->back()
+            ->with('success', 'Grade created succefully');
     }
 
     /**
@@ -68,9 +75,9 @@ class GradeController extends Controller
      */
     public function edit($idGrade)
     {
-        $grade = Grade::finOrFail($idGrade);
+       $grade = Grade::where("idGrade",$idGrade)->first();
 
-        return view('grades.edit', compact('grade'));
+        return view('grades.edite', compact('grade'));
     }
 
     /**
@@ -83,16 +90,20 @@ class GradeController extends Controller
     public function update(Request $request, $idGrade)
     {
         $this->validate($request, [
-            'nomGrade' => 'required|3',
-            'codeGrade' => 'required|3'
+            'nomGrade' => 'required',
+            'codeGrade' => 'required',
+            'salaireBaseGrade' => 'required'
         ]);
 
-        $grade=Grade::finOrFail($idGrade);
+        $grade=Grade::findOrFail($idGrade);
 
         $grade->update([
             'nomGrade' => $request->nomGrade,
-            'codeGrade' => $request->codeGrade
+            'codeGrade' => $request->codeGrade,
+            'salaireBaseGrade' => $request->salaireBaseGrade
         ]);
+        return redirect()->back()
+            ->with('succes', 'Grade modifie succefully');
     }
 
     /**

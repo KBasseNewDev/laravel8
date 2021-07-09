@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\service;
 
 class ServiceController extends Controller
 {
@@ -13,9 +14,9 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $prime = Service::all();
+        $services = Service::all();
 
-        return view('services.index', compact('service'));
+        return view('services.index', compact('services'));
     }
 
     /**
@@ -37,12 +38,14 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nomService' => 'required|3'
+            'nomService' => 'required|unique:services'
         ]);
 
-        Prime::create([
+        Service::create([
             'nomService' => $request->nomService
         ]);
+        return redirect()->back()
+            ->with('success', 'Service created succefully');
     }
 
     /**
@@ -66,9 +69,9 @@ class ServiceController extends Controller
      */
     public function edit($idService)
     {
-        $service = Service::finOrFail($idService);
+        $service = Service::findOrFail($idService);
 
-        return view('services.edit', compact('service'));
+        return view('services.edite', compact('service'));
     }
 
     /**
@@ -81,14 +84,16 @@ class ServiceController extends Controller
     public function update(Request $request, $idService)
     {
         $this->validate($request, [
-            'nomService' => 'required|3'
+            'nomService' => 'required|'
         ]);
 
-        $service=Service::finOrFail($idService);
+        $service=Service::findOrFail($idService);
 
         $service->update([
             'nomService' => $request->nomService
         ]);
+        return redirect()->back()
+            ->with('succes', 'Service modifie succefully');
     }
 
     /**

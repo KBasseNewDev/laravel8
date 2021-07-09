@@ -9,4 +9,5 @@ class Affecter extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $primaryKey = 'idAffecter';
 }

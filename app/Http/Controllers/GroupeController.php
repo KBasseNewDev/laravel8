@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Groupe;
 
 class GroupeController extends Controller
 {
@@ -13,9 +14,9 @@ class GroupeController extends Controller
      */
     public function index()
     {
-        $primes = Groupe::all();
+        $groupes = Groupe::all();
 
-        return view('groupes.index', compact('groupe'));
+        return view('groupes.index', compact('groupes'));
     }
 
     /**
@@ -37,14 +38,16 @@ class GroupeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nomGroupe' => 'required|3',
-            'montantBruteGroupe' => 'required|3'
+            'nomGroupe' => 'required|unique:groupes',
+            'montantBruteGroupe' => 'required|'
         ]);
 
         Groupe::create([
             'nomGroupe' => $request->nomGroupe,
             'montantBruteGroupe' => $request->montantBruteGroupe
         ]);
+        return redirect()->back()
+            ->with('success', 'Groupe created succefully');
     }
 
     /**
@@ -68,7 +71,7 @@ class GroupeController extends Controller
      */
     public function edit($idGroupe)
     {
-        $groupe = Groupe::finOrFail($idGroupe);
+        $groupe = Groupe::findOrFail($idGroupe);
 
         return view('groupes.edit', compact('groupe'));
     }

@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('css')
 
     <!-- Script -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -46,10 +47,10 @@
                             <a class="nav-link" aria-current="page" href="{{ url('/gereremploye')}}">Gerer Employe</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/reglementsalaire')}}">Reglement Salaire</a>
+                            <a class="nav-link" href="{{ url('/salaire')}}">Salaire</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">Requetes</a>
+                            <a class="nav-link" href="{{ url('/espaceemploye')}}">Espace Employe</a>
                         </li>
                     </ul>
 

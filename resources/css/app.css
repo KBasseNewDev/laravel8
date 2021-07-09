@@ -1,0 +1,12 @@
+nav ul .dropdown_tow ul {
+    position: absolute;
+    left: 200px;
+    top: 0;
+}
+
+
+nav ul span {
+    position: absolute;
+    right: 20px;
+    font-size: 1.5em;
+}

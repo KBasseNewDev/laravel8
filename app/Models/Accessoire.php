@@ -9,6 +9,7 @@ class Accessoire extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $primaryKey = 'idAccessoire';
 
     public function grades(){
         return $this->belongsToMany(Grade::class);

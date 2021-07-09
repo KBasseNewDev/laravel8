@@ -19,10 +19,10 @@ class CreateEmployesTable extends Migration
             $table->string('prenomEmploye');
             $table->date('dateNaissance');
             $table->integer('telephoneEmploye')->unique();
-            $table->string('matriculeEmploye');
+            $table->string('matriculeEmploye')->unique();
             $table->string('professionEmploye');
             $table->string('villeEmploye');
-            $table->string('numerocnpsEmploye');
+            $table->date('dateEmbauche');
             $table->string('situationMatrimonialeEmploye');
             $table->string('emailEmploye')->unique();
             $table->timestamps();

@@ -15,7 +15,7 @@ class CreateRetenuesTable extends Migration
     {
         Schema::create('retenues', function (Blueprint $table) {
             $table->bigIncrements('idRetenue');
-            $table->string('nomRetenue');
+            $table->string('nomRetenue')->unique();
             $table->unsignedInteger('montantRetenue');
             $table->timestamps();
         });

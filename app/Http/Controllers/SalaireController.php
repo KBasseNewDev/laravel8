@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Salaire;
 
 class SalaireController extends Controller
 {
@@ -36,23 +38,38 @@ class SalaireController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'etatSalaire' => 'required|3',
-            'periodeSalaire' => 'required|3',
-            'baseSalaire' => 'required|',
-            'tauxSalaire' => 'required|',
-            'gainSalaire' => 'required|',
-            'chargeSalaire' => 'required|'
-        ]);
+        $periodeSalaire = $request->input('periodeSalaire');
+        $baseSalaire = $request->input('baseSalaire');
+        $tauxSalaire = $request->input('tauxSalaire');
+        $gainSalaire = $request->input('gainSalaire');
+        $retenueSalaire = $request->input('retenueSalaire');
+        $salaireBrute = $request->input('salaireBrute');
+        $netImposable = $request->input('netImposable');
+        $chargeSalaire = $request->input('chargeSalaire');
+        $avantageNature = $request->input('avantageNature');
 
-        Salaire::create([
-            'etatSalaire' => $request->etatSalaire,
-            'periodeSalaire' => $request->periodeSalaire,
-            'baseSalaire' => $request->baseSalaire,
-            'tauxSalaire' => $request->tauxSalaire,
-            'gainSalaire' => $request->gainSalaire,
-            'chargeSalaire' => $request->chargeSalaire,
-        ]);
+        // $Total = 0;
+        // for ($i=0; $i <= 2 ; $i++) { 
+        //     $Total = $baseSalaire[$i] * $tauxSalaire[$i] + $gainSalaire[$i];
+        // }
+         // echo $Total;
+        // $salaireBrute = 0;
+        // $netImposable = 0;
+        // $chargeSalaire = 0;
+        // $Total = $salaireBrute = $baseSalaire * $tauxSalaire;
+
+        // echo $Total;
+        // return redirect()->route('back');
+        $baseSalaire = $row['baseSalaire'];
+        $tauxSalaire = $row['tauxSalaire'];
+        $gainSalaire = $row['gainSalaire'];
+        $retenueSalaire = $row['retenueSalaire'];
+
+        $salaireBrute = $baseSalaire * $tauxSalaire + $gainSalaire;
+
+        echo $salaireBrute;
+
+
     }
 
     /**

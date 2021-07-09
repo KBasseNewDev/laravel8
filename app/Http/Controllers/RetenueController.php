@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Retenue;
 
 class RetenueController extends Controller
 {
@@ -13,9 +14,9 @@ class RetenueController extends Controller
      */
     public function index()
     {
-        $retenue = Retenue::all();
+        $retenues = Retenue::all();
 
-        return view('retenues.index', compact('retenue'));
+        return view('retenues.index', compact('retenues'));
     }
 
     /**
@@ -37,14 +38,16 @@ class RetenueController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nomRetenue' => 'required|3',
-            'montantRetenue' => 'required|3'
+            'nomRetenue' => 'required|unique:retenues',
+            'montantRetenue' => 'required'
         ]);
 
         Retenue::create([
             'nomRetenue' => $request->nomRetenue,
             'montantRetenue' => $request->montantRetenue
         ]);
+        return redirect()->back()
+            ->with('success', 'Retenue created succefully');
     }
 
     /**
@@ -68,7 +71,7 @@ class RetenueController extends Controller
      */
     public function edit($idRetenue)
     {
-        $retenue = Retenue::finOrFail($idRetenue);
+        $retenue = Retenue::findOrFail($idRetenue);
 
         return view('retenues.edit', compact('retenue'));
     }
@@ -87,7 +90,7 @@ class RetenueController extends Controller
             'montantRetenue' => 'required|3'
         ]);
 
-        $retenue=Retenue::finOrFail($idRetenue);
+        $retenue=Retenue::findOrFail($idRetenue);
 
         $retenue->update([
             'nomRetenue' => $request->nomRetenue,

@@ -9,6 +9,8 @@ class Employe extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $fillable = ['nomEmploye', 'prenomEmploye', 'dateNaissance', 'telephoneEmploye', 'matriculeEmploye', 'professionEmploye', 'villeEmploye', 'dateEmbauche', 'situationMatrimonialeEmploye', 'emailEmploye'];
+    protected $primaryKey = 'idEmploye';
 
     public function banques(){
         return $this->belongsToMany(Banque::class);

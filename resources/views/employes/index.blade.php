@@ -1,70 +1,117 @@
 @extends('layouts.app')
 
+@section('css')
+      <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body{
+            height: 100%;
+            background: linear-gradient(to top right, #80cbc4, #e1bee7, #80ddea, #d1c4e9);
+        }
+        nav{
+            position: absolute;
+            top: auto;
+            bottom: auto;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            height: 100%;
+            background-color: #5cb85c;
+            box-shadow: 5px 7px 10px rgba(0, 0, 0, 0.5);
+        }
+        nav ul{
+            position: relative;
+            list-style-type: none;
+        }
+        nav ul li a{
+            display: flex;
+            align-items: center;
+            font-family: arial;
+            font-size: 1.15em;
+            text-decoration: none;
+            text-transform: capitalize;
+            color: #000;
+            padding: 10px 30px;
+            height: 50px;
+            transition: .5s ease;
+            border-radius: 0 30px;
+        }
+        nav ul li a:hover{
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+        }
+        nav ul ul{
+            position: absolute;
+            left: 220px;
+            width:200px;
+            top:0;
+            display: none;
+            background: rgba(155, 39, 176, .4);
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, .1);
+        }
+        nav ul span{
+            position: absolute;
+            right: 20px;
+            font-size: 1.5em; 
+
+        }
+        nav ul .dropdown{
+            position: relative;
+        }
+        nav ul .dropdown:hover > ul{
+            display:initial;
+        }
+        nav ul .dropdown_two ul{
+            position: absolute;
+            left: 200px;
+            top: 0;
+        }
+        nav ul .dropdown_two:hover ul{
+            display:initial;  
+        }
+    </style>
+@stop
+
 @section('content')
 
-	<div class="sidebar-nav sidebar-expand-md sidebar-light bg-white shadow-sm" style="width: 300px; position: absolute; top: 58px; bottom: -300px; border-radius: 10px; box-shadow: 5px 7px 10px;">
-		<h2>Gestion Employe</h2>
+	<nav>
+        <div><h2>Gestion Employer</h2></div>
+        <ul>
 
-		<!-- Left Side Of Navbar -->
-        <ul class="sidebar-nav mr-auto" style="position: relative; list-style: none;">
-        	<li class="">
-        		<a class="" href="{{ route('employes.create')}}" style="display: flex; text-decoration: none; font-family: arial; font-size: 1.15em; align-items: left; color: #000; padding: 10px 10px; border-radius: 0 30px;">Ajouter Nouvel Employe</a>
-        	</li>
-            <li class="dropdown">
-            	<a class="" href="#" style="display: flex; text-decoration: none; font-family: arial; font-size: 1.15em; align-items: left; color: #000; padding: 10px 10px; border-radius: 0 30px;">Listing
-            		<span>&rsaquo;</span></a>
-            	<ul class="" style="position: relative; list-style: none;">
-            		<li class="">
-            			<a class="" href="#" style="display: flex; text-decoration: none; font-family: arial; font-size: 1.15em; align-items: left; color: #000; padding: 10px 10px; border-radius: 0 30px;">Services</a>
-            		</li>
-                    <li class="">
-                    	<a class="" href="#" style="display: flex; text-decoration: none; font-family: arial; font-size: 1.15em; align-items: left; color: #000; padding: 10px 10px; border-radius: 0 30px;">Groupes</a>
-                    </li>
-            		<li class="">
-            			<a class="" href="{{ route('employes.index')}}" style="display: flex; text-decoration: none; font-family: arial; font-size: 1.15em; align-items: left; color: #000; padding: 10px 10px; border-radius: 0 30px;">Employes</a>
-            		</li>
-            		<li class="dropdown_tow">
-            			<a class="" href="#" style="display: flex; text-decoration: none; font-family: arial; font-size: 1.15em; align-items: left; color: #000; padding: 10px 10px; border-radius: 0 30px;">Etats Salaire
-            				<span>&rsaquo;</span>
-            			</a>
-            				<ul class="" style="position: relative; list-style: none;">
-				            	<li class="">
-				            		<a class="" href="#" style="display: flex; text-decoration: none; font-family: arial; font-size: 1.15em; align-items: left; color: #000; padding: 10px 10px; border-radius: 0 30px;">Avancement Salaire</a>
-				            	</li>
-				            	<li class="">
-				            		<a class="" href="#" style="display: flex; text-decoration: none; font-family: arial; font-size: 1.15em; align-items: left; color: #000; padding: 10px 10px; border-radius: 0 30px;">Salaire Impaye</a>
-				            	</li>
-				            	<li class="">
-				            		<a class="" href="#" style="display: flex; text-decoration: none; font-family: arial; font-size: 1.15em; align-items: left; color: #000; padding: 10px 10px; border-radius: 0 30px;">Salaire Paye</a>
-				            	</li>
-            				</ul>
-            		</li>
-                    <li class="">
-                    	<a class="" href="#" style="display: flex; text-decoration: none; font-family: arial; font-size: 1.15em; align-items: left; color: #000; padding: 10px 10px; border-radius: 0 30px;">Employes Par Groupes</a>
-                    </li>
-            		<li class="">
-            			<a class="" href="#" style="display: flex; text-decoration: none; font-family: arial; font-size: 1.15em; align-items: left; color: #000; padding: 10px 10px; border-radius: 0 30px;">Employe Par Service</a>
-            		</li>
-            	</ul>
+            <li class="dropdown"><a href="#">Ajouter<span>&rsaquo;</span></a>
+                <ul>
+                    <li><a href="{{ route('employes.create')}}">Employer</a></li>
+                    <li><a href="{{ route('groupes.create')}}">Groupe</a></li>
+                    <li><a href="{{ route('services.create')}}">Service</a></li>
+                    <li><a href="{{ route('grades.create')}}">Grade</a></li>
+                    <li><a href="{{ route('primes.create')}}">Primes</a></li>
+                    <li><a href="{{ route('retenues.create')}}">Retenues</a></li>
+                </ul>
             </li>
-            <li class="">
-            	<a class="" href="#" style="display: flex; text-decoration: none; font-family: arial; font-size: 1.15em; align-items: left; color: #000; padding: 10px 10px; border-radius: 0 30px;">Saisir Salaire</a>
+            <li class="dropdown"><a href="#">Ajouter Accessoire<span>&rsaquo;</span></a>
+                <ul>
+                    <li><a href="#">Prime</a></li>
+                    <li><a href="#">Retenue</a></li>
+                </ul>
             </li>
-            <li class="dropdown">
-            	<a class="" style="display: flex; text-decoration: none; font-family: arial; font-size: 1.15em; align-items: left; color: #000; padding: 10px 10px; border-radius: 0 30px;">Ajouter Accessoire
-            		<span>&rsaquo;</span>
-            	</a>
-            		<ul class="" style="position: relative; list-style: none;">
-				       	<li class="">
-				       		<a class="" href="#" style="display: flex; text-decoration: none; font-family: arial; font-size: 1.15em; align-items: left; color: #000; padding: 10px 10px; border-radius: 0 30px;">Prime</a>
-				       	</li>
-				       	<li class="">
-				       		<a class="" href="#" style="display: flex; text-decoration: none; font-family: arial; font-size: 1.15em; align-items: left; color: #000; padding: 10px 10px; border-radius: 0 30px;">Retenue</a>
-				       	</li>
-            		</ul>
-           	</li>          
+            <li class="dropdown"><a href="#">Listing<span>&rsaquo;</span></a>
+                <ul>
+                    <li><a href="{{ route('services.index')}}">Services</a></li>
+                    <li><a href="{{ route('groupes.index')}}">Groupes</a></li>
+                    <li><a href="{{ route('employes.index')}}">Employes</a></li>
+                    <li><a href="{{ route('grades.index')}}">Grades</a></li>
+                    <li><a href="{{ route('primes.index')}}">Primes</a></li>
+                    <li><a href="{{ route('retenues.index')}}">Retenues</a></li>
+                    <li><a href="">Employes Par Groupes</a></li>
+                    <li><a href="">Employe Par Service</a></li>
+                    
+                </ul>
+            </li>
         </ul>
-	</div>
+    </nav>
 
 
 
@@ -73,15 +120,46 @@
 
 
 
-	<h1>Liste des Employes</h1>
+	<h1 style="text-align: center;">Liste des Employers</h1>
+    
+	<table style="align-self: center; float: right; border-collapse: collapse; border:medium solid #000000; width:80%; text-align: left;" class="table table-bordered">
+		<tr style="border:thin solid #6495ed; width: 25%; font-family: sans-serif; border:thin solid #6495ed; padding: 5px; text-align: center;">
+			<th>id</th> <th>Nom</th><th>prenom</th><th>date Naissance</th><th>tel</th><th>matricule</th><th>profession</th><th>ville</th><th>date D'Embauche</th><th>situation</th><th>email</th><td>action</th>
+		</tr>
 
-	@if(count($employes) > 0)
-	<ul>
+	
+	   @if($employes->count() > 0)
 		
-		@foreach($employes as employe)
-		<li>{{ $employes->id}}</li>
-	</ul>
-	@else
-		<p>Aucun employe pour le moment</p>
-	@endif
-@stop
+		@foreach($employes as $employe)
+		<tr style="border:thin solid #6495ed; width: 25%; font-family: sans-serif; border:thin solid #6495ed; padding: 5px; text-align: center;">
+			<td>{{$employe->idEmploye}}</td>
+			<td>{{$employe->nomEmploye}}</td>
+			<td>{{$employe->prenomEmploye}}</td>
+			<td>{{$employe->dateNaissance}}</td>
+			<td>{{$employe->telephoneEmploye}}</td>
+			<td>{{$employe->matriculeEmploye}}</td>
+			<td>{{$employe->professionEmploye}}</td>
+			<td>{{$employe->villeEmploye}}</td>
+			<td>{{$employe->dateEmbauche}}</td>
+			<td>{{$employe->situationMatrimonialeEmploye}}</td>
+			<td>{{$employe->emailEmploye}}</td>
+			
+			<td>
+    				<a class="btn btn-info" href="{{route('employes.edit',$employe->idEmploye) }}">Editer </a>
+                    <a class="btn btn-primary" href="{{route('employes.show',$employe->idEmploye)}}">build paie </a>
+                <form action="{{ route('employes.destroy', $employe->idEmploye) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+    				<a class="btn btn-dark" href="{{route('employes.destroy',$employe->idEmploye)}}">supprimer </a>
+                </form>
+			</td>
+		</tr>
+		@endforeach
+
+        @else
+        <p>Aucun employer</p>
+        @endif
+	</table>
+
+	
+@endsection

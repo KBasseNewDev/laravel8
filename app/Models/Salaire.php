@@ -9,6 +9,9 @@ class Salaire extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $fillable = ['periodeSalaire', 'baseSalaire', 'tauxSalaire', 'heureSup', 'gainSalaire', 'retenueSalaire', 'chargeSalaire', 'salaireBrute', 'netImposable', 'avantageNature', 'netPayer'];
+
+    protected $primaryKey = 'idSalaire';
 
     public function accessoires(){
         return $this->belongsToMany(Accessoire::class);

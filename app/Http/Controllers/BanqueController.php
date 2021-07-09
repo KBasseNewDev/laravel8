@@ -101,6 +101,8 @@ class BanqueController extends Controller
             'rueBanque' => $request->rueBanque,
             'codeBanque' => $request->codeBanque
         ]);
+        return redirect()->back()
+            ->with('succes', 'Banque modifie succefully');
     }
 
     /**

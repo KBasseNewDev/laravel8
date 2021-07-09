@@ -9,6 +9,8 @@ class Grade extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $fillable = ['nomGrade', 'codeGrade', 'salaireBaseGrade'];
+    protected $primaryKey = 'idGrade';
 
     public function employes(){
         return $this->belongsToMany(Employe::class);

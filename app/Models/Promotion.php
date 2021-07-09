@@ -9,4 +9,5 @@ class Promotion extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $primaryKey = 'idPromotion';
 }

@@ -9,6 +9,7 @@ class Banque extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $primaryKey = 'idBanque';
 
     public function employes(){
         return $this->belongsToMany(Employe::class);

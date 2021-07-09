@@ -9,6 +9,7 @@ class Reglementsalaire extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $primaryKey = 'idReglementsalaire';
 
     public function salaires() 
     { 

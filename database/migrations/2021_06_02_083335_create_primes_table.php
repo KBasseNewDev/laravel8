@@ -15,7 +15,7 @@ class CreatePrimesTable extends Migration
     {
         Schema::create('primes', function (Blueprint $table) {
             $table->bigIncrements('idPrime');
-            $table->string('nomPrime');
+            $table->string('nomPrime')->unique();
             $table->unsignedInteger('montantPrime');
             $table->timestamps();
         });
