@@ -21,9 +21,9 @@ class CreateAbonnementsTable extends Migration
             $table->unsignedInteger('numeroCompteAbonnement');
             $table->string('typeCompteAbonnement');
             $table->timestamps();
-            $table->unsignedBigInteger('idEmploye');
-            $table->foreign('idEmploye')
-            ->references('idEmploye')
+            $table->unsignedBigInteger('employe_id');
+            $table->foreign('employe_id')
+            ->references('id')
             ->on('employes')
             ->onDelete('restrict')
             ->onUpdate('restrict');

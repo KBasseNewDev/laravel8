@@ -22,7 +22,7 @@ class CreateReglementsalairesTable extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('idSalaire');
             $table->foreign('idSalaire')
-            ->references('idSalaire')
+            ->references('id')
             ->on('salaires')
             ->onDelete('restrict')
             ->onUpdate('restrict');

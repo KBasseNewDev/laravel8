@@ -99,11 +99,6 @@
             </li>
         </ul>
     </nav>
-
-    @if(!$salaires)
-        @include('salaires.form')
-    @else
-
     <form action="{{ url('salaires') }}" method="POST">
         @csrf
         <h1 style="text-align: center;">Bulletin De</h1>
@@ -117,20 +112,19 @@
             </tr>   
                 
             <tr>
-                <td><p style="">Période Du:  <input type="text" value={{ $salaires->periodeSalaire }} name="periodeSalaire"></p></td>
+                <td><p style="">Période Du:  <input type="text"  name="periodeSalaire"></p></td>
                 <td><p style="">Service:  <input type="text" name="text"></p> </td>   
-                
             </tr>
             <tr>
                 <td><p style="">Choisir un employe:  
-                    <select name="employe_id" id="" >
+                    <select name="employe_id" id="">
                     <option value="">----------------</option>
                     @foreach ($employes as $employe )
                         <option value="{{$employe->id}}">{{$employe->emailEmploye}}</option>
                     @endforeach 
                     </select>
                 </td>
-            </tr>
+            </tr>  
         </table>
 
 
@@ -143,10 +137,10 @@
           
             <tr style="border:thin solid #6495ed; width: 25%; font-family: sans-serif; border:thin solid #6495ed; padding: 5px; text-align: center;">
                 <td>Salaire mensuel</td>
-                <td><input type="number" value={{ $salaires->baseSalaire }} name="baseSalaire"> </td>
-                <td><input type="number" value={{ $salaires->tauxSalaire }} name="tauxSalaire"></td>
+                <td><input type="number"  name="baseSalaire"> </td>
+                <td><input type="number"  name="tauxSalaire"></td>
                 <!-- Gain sun base*taux -->
-                <td>{{ $salaires->tauxSalaire*$salaires->baseSalaire }}</td> 
+                <td></td> 
                 <td></td>
                 
                
@@ -199,7 +193,7 @@
                 <th>Total</th>
                 <td> </td>
                 <td></td>
-                <td>{{ $salaires->gainSalaire }}</td>
+                <td></td>
                 <td></td>
                 
                 
@@ -289,12 +283,12 @@
           
             <tr style="border:thin solid #6495ed; width: 25%; font-family: sans-serif; border:thin solid #6495ed; padding: 5px; text-align: center;">
                 <th>Période</th>
-                <td>{{ $salaires->salaireBrute }}</td>
-                <td>{{ $salaires->netImposable }}</td>
-                <td>{{ $salaires->chargeSalaire }}</td>
-                <td><input type="number" value={{ $salaires->heureSup }} name="heure_sup"></td>
-                <td><input type="text" value={{ $salaires->avantageNature }} name="avatange_nature"></td>
-                <td>{{ $salaires->netPayer }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="number"  name="heure_sup"></td>
+                <td><input type="text"  name="avatange_nature"></td>
+                <td></td>
                 
                
             </tr>
@@ -305,10 +299,5 @@
             <button type="submit" class="btn btn-info" href="{{route('employes.index') }}">Go &raquo;</button>
         </div>
     </form>
-    @endif
-
-
-	
-
 	
 @endsection

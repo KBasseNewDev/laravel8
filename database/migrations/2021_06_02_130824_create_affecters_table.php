@@ -25,9 +25,9 @@ class CreateAffectersTable extends Migration
             ->on('services')
             ->onDelete('restrict')
             ->onUpdate('restrict');
-            $table->unsignedBigInteger('idEmploye');
-            $table->foreign('idEmploye')
-            ->references('idEmploye')
+            $table->unsignedBigInteger('employe_id');
+            $table->foreign('employe_id')
+            ->references('id')
             ->on('employes')
             ->onDelete('restrict')
             ->onUpdate('restrict');

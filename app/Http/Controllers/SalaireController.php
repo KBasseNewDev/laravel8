@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Salaire;
+use App\Models\Employe;
+use App\Models\User;
 
 class SalaireController extends Controller
 {
@@ -27,7 +29,30 @@ class SalaireController extends Controller
      */
     public function create()
     {
-        return view('salaires.create');
+        // $salaires = DB::table('salaires')
+        //             ->where('employe_id',2)
+        //             ->get()->last();
+        $salaires = null;
+        $employes = DB::table('employes')
+                    ->get();
+        $data = [
+            'ret_credit' => 0,
+            'ret_rav' => 0,
+            'ret_cotisation' => 0,
+            'ret_cac_irpp' => 0,
+            'ret_irpp' => 0,
+            'ret_fiscal' => 0,
+            'prime_old' => 0,
+            'prime_technicite' => 0,
+            'ind_transport' => 0,
+            'ind_logement' => 0
+        ];
+        return view('salaires.create',[
+                'salaires' => $salaires,
+                'data' => $data,
+                'employes' => $employes
+            ]
+        );
     }
 
     /**
@@ -41,33 +66,80 @@ class SalaireController extends Controller
         $periodeSalaire = $request->input('periodeSalaire');
         $baseSalaire = $request->input('baseSalaire');
         $tauxSalaire = $request->input('tauxSalaire');
-        $gainSalaire = $request->input('gainSalaire');
-        $retenueSalaire = $request->input('retenueSalaire');
-        $salaireBrute = $request->input('salaireBrute');
-        $netImposable = $request->input('netImposable');
-        $chargeSalaire = $request->input('chargeSalaire');
-        $avantageNature = $request->input('avantageNature');
+        $heureSup = $request->input('heure_sup');
+        $avantageNature = $request->input('avatange_nature');
 
-        // $Total = 0;
-        // for ($i=0; $i <= 2 ; $i++) { 
-        //     $Total = $baseSalaire[$i] * $tauxSalaire[$i] + $gainSalaire[$i];
-        // }
-         // echo $Total;
-        // $salaireBrute = 0;
-        // $netImposable = 0;
-        // $chargeSalaire = 0;
-        // $Total = $salaireBrute = $baseSalaire * $tauxSalaire;
+        $ret_credit = $request->input('ret_credit');
+        $ret_rav = $request->input('ret_rav');
+        $ret_cotisation = $request->input('ret_cotisation');
+        $ret_cac_irpp = $request->input('ret_cac_irpp');
+        $ret_irpp = $request->input('ret_irpp');
+        $ret_fiscal =$request->input('ret_fiscal');
 
-        // echo $Total;
-        // return redirect()->route('back');
-        $baseSalaire = $row['baseSalaire'];
-        $tauxSalaire = $row['tauxSalaire'];
-        $gainSalaire = $row['gainSalaire'];
-        $retenueSalaire = $row['retenueSalaire'];
+        $prime_old = $request->input('prime_old');
+        $prime_technicite = $request->input('prime_technicite');
+        $ind_transport = $request->input('ind_transport');
+        $ind_logement = $request->input('ind_logement');
 
-        $salaireBrute = $baseSalaire * $tauxSalaire + $gainSalaire;
+        $array_gain = array($baseSalaire*$tauxSalaire, $prime_old, $prime_technicite, $ind_transport, $ind_logement);
+        $array_retenu = array($ret_credit, $ret_rav, $ret_cotisation, $ret_cac_irpp, $ret_irpp, $ret_fiscal);
+        
+        $gainSalaire = array_sum($array_gain);
+        $retenueSalaire = array_sum($array_retenu);
+        $chargeSalaire=$retenueSalaire;
+        $salaireBrute=$gainSalaire;
+        $netImposable=$salaireBrute - $chargeSalaire;
+        $netPayer= $netImposable + $heureSup;
 
-        echo $salaireBrute;
+        $employe_id =$request->input('employe_id');
+        // dd();
+        $check_user = DB::table('salaires')
+                    ->where('employe_id',1)
+                    ->get();
+        // dd($check_user->isNotEmpty());
+        if(!$check_user->isNotEmpty()){
+            DB::table('salaires')->insert([
+                ['periodeSalaire' => $periodeSalaire,'baseSalaire' => $baseSalaire,
+                'tauxSalaire' => $tauxSalaire,'heureSup' => $heureSup,
+                'gainSalaire' => $gainSalaire,'retenueSalaire' => $retenueSalaire,
+                'chargeSalaire' => $chargeSalaire,'salaireBrute' => $salaireBrute,
+                'netImposable' => $netImposable,'avantageNature' => $avantageNature,
+                'netPayer' => $netPayer,'employe_id' => $employe_id],
+            ]);
+        }else{
+            DB::table('salaires')
+              ->where('employe_id', $employe_id)
+              ->update(
+                ['periodeSalaire' => $periodeSalaire,'baseSalaire' => $baseSalaire,
+                    'tauxSalaire' => $tauxSalaire,'heureSup' => $heureSup,
+                    'gainSalaire' => $gainSalaire,'retenueSalaire' => $retenueSalaire,
+                    'chargeSalaire' => $chargeSalaire,'salaireBrute' => $salaireBrute,
+                    'netImposable' => $netImposable,'avantageNature' => $avantageNature,
+                    'netPayer' => $netPayer,'employe_id' => $employe_id],
+              );
+        }
+        
+        // Salaire::create(['periodeSalaire' => $periodeSalaire]);
+
+        $salaires = DB::table('salaires')
+                    ->where('employe_id',1)
+                    ->get()->last();
+        $data = [
+            'ret_credit' => $ret_credit,
+            'ret_rav' => $ret_rav,
+            'ret_cotisation' => $ret_cotisation,
+            'ret_cac_irpp' => $ret_cac_irpp,
+            'ret_irpp' => $ret_irpp,
+            'ret_fiscal' => $ret_fiscal,
+            'prime_old' => $prime_old,
+            'prime_technicite' => $prime_technicite,
+            'ind_transport' => $ind_transport,
+            'ind_logement' => $ind_logement
+        ];
+        
+        $employes = DB::table('employes')
+                    ->get();
+        return view('salaires.create',['salaires'=>$salaires,'data'=>$data, 'employes'=>$employes]);
 
 
     }

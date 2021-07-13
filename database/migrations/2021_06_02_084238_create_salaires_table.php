@@ -15,25 +15,25 @@ class CreateSalairesTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
         Schema::create('salaires', function (Blueprint $table) {
-            $table->bigIncrements('idSalaire');
-            $table->string('periodeSalaire');
-            $table->unsignedInteger('baseSalaire');
-            $table->unsignedInteger('tauxSalaire');
-            $table->unsignedInteger('heureSup');
-            $table->unsignedInteger('gainSalaire');
-            $table->unsignedInteger('retenueSalaire');
-            $table->unsignedInteger('chargeSalaire');
-            $table->unsignedInteger('salaireBrute');
-            $table->unsignedInteger('netImposable');
-            $table->string('avantageNature');
-            $table->unsignedInteger('netPayer');
+            $table->bigIncrements('id');
+            $table->string('periodeSalaire')->default('0-0-0');
+            $table->unsignedInteger('baseSalaire')->default(0);
+            $table->unsignedInteger('tauxSalaire')->default(0);
+            $table->unsignedInteger('heureSup')->default(0);
+            $table->unsignedInteger('gainSalaire')->default(0);
+            $table->unsignedInteger('retenueSalaire')->default(0);
+            $table->unsignedInteger('chargeSalaire')->default(0);
+            $table->unsignedInteger('salaireBrute')->default(0);
+            $table->unsignedInteger('netImposable')->default(0);
+            $table->string('avantageNature')->default('');
+            $table->unsignedInteger('netPayer')->default(0);
             $table->timestamps();
-            $table->unsignedBigInteger('idEmploye');
-            $table->foreign('idEmploye')
-            ->references('idEmploye')
+            $table->unsignedBigInteger('employe_id');
+            $table->foreign('employe_id')
+            ->references('id')
             ->on('employes')
-            ->onDelete('restrict')
-            ->onUpdate('restrict');
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
         });
     }
 
